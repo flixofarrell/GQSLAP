@@ -1,0 +1,37 @@
+######################################################
+#
+# 
+# 
+######################################################
+
+# General options:
+general:
+    author_name: Felix O'Farrell
+    project_name: UKBB Pipe
+    licence:
+    version: 1.0
+
+# Pipeline specific options:
+
+#dir of UKBB files
+files: /Users/flixofarrell/Desktop/test_files/small
+
+#title of GRM directory (made by pipeline)
+GRM_dir: GRMs
+
+#dir of GCTA64 command 
+gcta_dir: gcta/gcta64
+
+pheno: /Users/flixofarrell/Desktop/test_files/small/phe_n.phen
+
+#cluster:
+#    tmpdir: /tmp/
+#memory_resource: mem
+
+#options: -l walltime=00:24:00 -l select=1:ncpus=20:mem=1gb
+
+#queue_manager: pbspro
+
+#queue: NONE
+
+#parallel_environment:  "dedicated"
