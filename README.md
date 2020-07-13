@@ -30,7 +30,7 @@ CGAT-core is required and can be downloaded from anaconda
 conda install -c bioconda cgatcore
 conda install -c bioconda/label/cf201901 cgatcore
 ```
-
+fastGWA is a feature in the GCTA package available [here](https://cnsgenomics.com/software/gcta/#Download)
 
 ## Usage
 
