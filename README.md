@@ -1,4 +1,4 @@
-# BBslap
+# BBslap (working title)
 BioBank SimpLe Automated Pipeline
 
 BBslap is an automated pipeline designed to process UKBB plink files on HPCs. The pipeline is built ontop of CGAT-core and uses GCTA's fastGWA linear mixed model GWAS algorithm.
@@ -53,7 +53,12 @@ GRM_dir: GRMs
 #dir of GCTA64 command 
 gcta_dir: path/to/gcta/gcta64
 
+#pheno file dir
 pheno: /path/to/your/UKBB/pheno/file
+
+#how many parts to split GRM into (save memory) 
+#gcta authors advise 250 
+part: 3
 ```
 
 and run
