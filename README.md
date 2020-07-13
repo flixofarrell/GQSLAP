@@ -60,6 +60,8 @@ pheno: /path/to/your/UKBB/pheno/file
 #how many parts to split GRM into (save memory) 
 #gcta authors advise 250 
 part: 3
+
+#will add param for covariates soon...
 ```
 
 and run
