@@ -1,5 +1,5 @@
 """========================================================
-	  		FOF UKBB PIPELINE V2.0
+	  		BBslap V1.0
 ===========================================================
 
 Overview
@@ -93,6 +93,8 @@ def generate_GRM(title):
 	
 	gcta = PARAMS["gcta_dir"]
 
+	part = PARAMS["part"]
+
 	GRMs = os.path.abspath(
       	   os.path.join(PARAMS["files"] + "/GRMs"))
 
@@ -103,7 +105,7 @@ def generate_GRM(title):
 
 	statement = '''
 
-	scripts/GRM_loop.sh %(gcta)s %(title)s %(GRMs)s/%(chrom)s
+	scripts/GRM_loop.sh %(gcta)s %(title)s %(part)s %(GRMs)s/%(chrom)s
 
 				'''
 
@@ -128,12 +130,14 @@ def concat1(title):
 	chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
 	chrom = ''.join(chrom)
 
+	part = PARAMS["part"]
+
 
 	statement = '''
 
-	cat %(GRMs)s/%(chrom)s.part_3_*.grm.id > %(GRMs)s/%(chrom)s.grm.id &&
-	cat %(GRMs)s/%(chrom)s.part_3_*.grm.bin > %(GRMs)s/%(chrom)s.grm.bin &&
-	cat %(GRMs)s/%(chrom)s.part_3_*.grm.N.bin > %(GRMs)s/%(chrom)s.grm.N.bin
+	cat %(GRMs)s/%(chrom)s.part_%(part)s_*.grm.id > %(GRMs)s/%(chrom)s.grm.id &&
+	cat %(GRMs)s/%(chrom)s.part_%(part)s_*.grm.bin > %(GRMs)s/%(chrom)s.grm.bin &&
+	cat %(GRMs)s/%(chrom)s.part_%(part)s_*.grm.N.bin > %(GRMs)s/%(chrom)s.grm.N.bin
 
 				'''
 
@@ -299,15 +303,3 @@ if __name__ == "__main__":
     sys.exit(P.main(sys.argv))
 
 #end
-
-
-
-
-
-
-
-
-
-
-
-

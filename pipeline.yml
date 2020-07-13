@@ -24,14 +24,5 @@ gcta_dir: gcta/gcta64
 
 pheno: /Users/flixofarrell/Desktop/test_files/small/phe_n.phen
 
-#cluster:
-#    tmpdir: /tmp/
-#memory_resource: mem
+part: 3
 
-#options: -l walltime=00:24:00 -l select=1:ncpus=20:mem=1gb
-
-#queue_manager: pbspro
-
-#queue: NONE
-
-#parallel_environment:  "dedicated"
