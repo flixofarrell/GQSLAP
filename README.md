@@ -1,3 +1,4 @@
+![Alt text](bblogo/bblogo.png?raw=true "Title")
 # BBslap (working title)
 BioBank SimpLe Automated Pipeline
 
