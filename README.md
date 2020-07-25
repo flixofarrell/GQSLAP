@@ -8,7 +8,7 @@ BBslap is an automated pipeline designed to process UKBB plink files on HPCs. Th
 
 The pipeline performs the following:
    * Searches for plink files in user designated directories
-   * Creates a GRMs by parts to limit the amount of memory required 
+   * Creates a GRM by parts to limit the amount of memory required 
    * Concatenates the GRM parts into master GRMs for each chromosome
    * Runs GCTA's lmm GWAS algorithm on the plink files and GRMs
    * Concatenates the fastGWA output into a single master summary file
