@@ -67,17 +67,14 @@ for file in os.listdir(files):
 for i in c_title:
     bfiles.append(i[:-4])
 
-
-
-
 GRMs = os.path.abspath(
-       os.path.join(PARAMS["files"] + "/GRMs"))
+      	os.path.join(PARAMS["out_dir"] + "/GRMs"))
 
 SPs = os.path.abspath(
-       os.path.join(PARAMS["files"] + "/SPs"))
+      	os.path.join(PARAMS["out_dir"] + "/SPs"))
 
 GWAS = os.path.abspath(
-       os.path.join(PARAMS["files"] + "/GWAS"))
+      	os.path.join(PARAMS["out_dir"] + "/GWAS"))
 
 ##################################################
 # Generate GRM from raw plink files
@@ -96,7 +93,7 @@ def generate_GRM(title):
 	part = PARAMS["part"]
 
 	GRMs = os.path.abspath(
-      	   os.path.join(PARAMS["files"] + "/GRMs"))
+      	os.path.join(PARAMS["out_dir"] + "/GRMs"))
 
 	chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
 	chrom = ''.join(chrom)
@@ -105,7 +102,7 @@ def generate_GRM(title):
 
 	statement = '''
 
-	scripts/GRM_loop.sh %(gcta)s %(title)s %(part)s %(GRMs)s/%(chrom)s
+    ./scripts/GRM_loop.sh %(gcta)s %(title)s %(part)s %(GRMs)s/%(chrom)s
 
 				'''
 
@@ -125,7 +122,7 @@ def concat1(title):
 	files for each chromosome.
 	'''
 	GRMs = os.path.abspath(
-      	   os.path.join(PARAMS["files"] + "/GRMs"))
+      	   os.path.join(PARAMS["out_dir"] + "/GRMs"))
 	
 	chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
 	chrom = ''.join(chrom)
@@ -159,10 +156,10 @@ def sparse_GRM(title):
 	gcta = PARAMS["gcta_dir"]
 
 	GRMs = os.path.abspath(
-      	   os.path.join(PARAMS["files"] + "/GRMs"))
+      	   os.path.join(PARAMS["out_dir"] + "/GRMs"))
 
 	SPs = os.path.abspath(
-      	   os.path.join(PARAMS["files"] + "/SPs"))
+      	   os.path.join(PARAMS["out_dir"] + "/SPs"))
 
 	chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
 	chrom = ''.join(chrom)
@@ -195,13 +192,13 @@ def mlm_gwa(title):
       	   os.path.join(PARAMS["files"]))
 
 	GRMs = os.path.abspath(
-      	   os.path.join(PARAMS["files"] + "/GRMs"))
+      	   os.path.join(PARAMS["out_dir"] + "/GRMs"))
 
 	GWAS = os.path.abspath(
-      	   os.path.join(PARAMS["files"] + "/GWAS"))	
+      	   os.path.join(PARAMS["out_dir"] + "/GWAS"))	
 
 	SPs = os.path.abspath(
-      	   os.path.join(PARAMS["files"] + "/SPs"))
+      	   os.path.join(PARAMS["out_dir"] + "/SPs"))
 
 	pheno = PARAMS["pheno"]
 
@@ -238,7 +235,7 @@ def concat2():
 	'''	
 
 	GWAS = os.path.abspath(
-      	   os.path.join(PARAMS["files"] + "/GWAS"))	
+      	   os.path.join(PARAMS["out_dir"] + "/GWAS"))	
 
 	statement = '''
 

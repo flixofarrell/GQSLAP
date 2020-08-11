@@ -1,6 +1,6 @@
 ######################################################
 #
-# 
+# YAML file to config parameters 
 # 
 ######################################################
 
@@ -16,13 +16,13 @@ general:
 #dir of UKBB files
 files: /Users/flixofarrell/Desktop/test_files/small
 
-#title of GRM directory (made by pipeline)
-GRM_dir: GRMs
 
 #dir of GCTA64 command 
-gcta_dir: gcta/gcta64
+gcta_dir: ./gcta/gcta64
 
 pheno: /Users/flixofarrell/Desktop/test_files/small/phe_n.phen
 
 part: 3
+
+out_dir: /Users/flixofarrell/Desktop/outdir
 
