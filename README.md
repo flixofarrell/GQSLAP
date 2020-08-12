@@ -1,6 +1,6 @@
 ![Alt text](bblogo/bblogo.png?raw=true "Title")
 
-[![Build Status](https://travis-ci.com/github/flixofarrell/BBslap.png)](https://travis-ci.com/github/flixofarrell/BBslap)
+[![Build Status](https://travis-ci.com/flixofarrell/BBslap.svg?token=Hj1nVnJyVpML1NxVZNpy&branch=master)](https://travis-ci.com/flixofarrell/BBslap)
 
 
 # BBslap (working title)
