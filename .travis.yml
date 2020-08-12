@@ -7,10 +7,10 @@ install:
   - pip install gevent
   - pip install paramiko
   - pip install pep8
-  - pip install pytest<=5.4.3
+  - pip install pytest
   - pip install pytest-pep8
   - pip install drmaa
-  - pip install pyyaml>=5.1
+  - pip install pyyaml
   - pip install setuptools
   - pip install six
   - pip install sqlalchemy
