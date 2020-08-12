@@ -3,6 +3,7 @@ language: python
 install:
   - pip install cgatcore
   - pip install pyyaml
+  - pip install ruffus
 # command to run tests
 script:
   - python BBslap.py make full --local 
