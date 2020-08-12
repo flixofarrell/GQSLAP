@@ -6,6 +6,15 @@ install:
   - pip install ruffus
   - pip install gevent
   - pip install paramiko
+  - pip install pep8
+  - pip install pytest<=5.4.3
+  - pip install pytest-pep8
+  - pip install drmaa
+  - pip install pyyaml>=5.1
+  - pip install setuptools
+  - pip install six
+  - pip install sqlalchemy
+
 # command to run tests
 script:
   - python BBslap.py make full --local 
