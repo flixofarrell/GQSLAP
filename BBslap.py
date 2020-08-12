@@ -42,10 +42,6 @@ import cgatcore.iotools as iotools
 import os
 import sys
 import re
-import pandas as pd
-import numpy as np
-#import hail as hl
-#from bokeh.io import export_png
 
 
 #get parameters from YML file
