@@ -1,4 +1,8 @@
 ![Alt text](bblogo/bblogo.png?raw=true "Title")
+
+[![Build Status](https://travis-ci.com/github/flixofarrell/BBslap.png)](https://travis-ci.com/github/flixofarrell/BBslap)
+
+
 # BBslap (working title)
 BioBank SimpLe Automated Pipeline
 
