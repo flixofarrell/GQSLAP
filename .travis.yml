@@ -5,6 +5,7 @@ install:
   - pip install pyyaml
   - pip install ruffus
   - pip install gevent
+  - pip install paramiko
 # command to run tests
 script:
   - python BBslap.py make full --local 
