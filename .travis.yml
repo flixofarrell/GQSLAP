@@ -19,11 +19,10 @@ install:
   - pip install numpy
 # Misc dependencies
   - pip install pycoreutils
-  - pip install nomkl
-  - pip install time
+  - pip install times
   - pip install boto3
   - pip install google-cloud-storage
-  - pip install google-cloud-sdk
+  - pip install google-cloud
   - pip install ftputil
   - pip install pysftp
 
