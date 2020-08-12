@@ -21,7 +21,7 @@ Usage
 Configuration
 -------------
 The pipeline requires a pipeline.yml configuration file. This is located
-within the fast-mlm directory.
+within the BBSlap directory.
 Input
 -----
 
