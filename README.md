@@ -18,7 +18,7 @@ The pipeline performs the following:
    * Concatenates the fastGWA output into a single master summary file
    
    
-Author: Felix O'Farell
+Author: Felix O'Farrell
 Date: June 2020
 
 
