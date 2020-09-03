@@ -28,4 +28,4 @@ install:
 
 # command to run tests
 script:
-  - python BBslap.py make full --local 
+  - python GQSLAP.py make full --local 

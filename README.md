@@ -4,9 +4,9 @@
 
 
 # GQSLAP
-BioBank SimpLe Automated Pipeline
+GWAS/QTL SimpLe Automated Pipeline
 
-BBslap is an automated pipeline designed to process UKBB plink files on HPCs. The pipeline is built ontop of CGAT-core and uses GCTA's fastGWA linear mixed model GWAS algorithm.
+GQSLAP is an automated pipeline designed to process UKBB plink files on HPCs. The pipeline is built ontop of CGAT-core and uses GCTA's fastGWA linear mixed model GWAS algorithm.
 
 ## Overview
 
