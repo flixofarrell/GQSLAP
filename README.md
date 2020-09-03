@@ -3,14 +3,14 @@
 [![Build Status](https://travis-ci.com/flixofarrell/BBslap.svg?token=Hj1nVnJyVpML1NxVZNpy&branch=master)](https://travis-ci.com/flixofarrell/BBslap)
 
 
-# BBslap (working title)
+# GQSLAP
 BioBank SimpLe Automated Pipeline
 
 BBslap is an automated pipeline designed to process UKBB plink files on HPCs. The pipeline is built ontop of CGAT-core and uses GCTA's fastGWA linear mixed model GWAS algorithm.
 
 ## Overview
 
-The pipeline performs the following:
+GQSLAP performs the following:
    * Searches for plink files in user designated directories
    * Creates a GRM by parts to limit the amount of memory required 
    * Concatenates the GRM parts into master GRMs for each chromosome
@@ -24,7 +24,7 @@ Date: June 2020
 
 ## Installation
 
-Currently required to clone this github directory and download GCTA's latest release and place it inside the BBslap dir.
+Currently required to clone this github directory and download GCTA's latest release and place it inside the GQSLAP dir.
 
 ## Dependencies 
 
@@ -38,12 +38,12 @@ fastGWA is a feature in the GCTA package available [here](https://cnsgenomics.co
 
 ## Usage
 
-Go into the BBslap directory and open the pipeline.yml file. Alter the yml to configure with your system
+Go into the GQSLAP directory and open the pipeline.yml file. Alter the yml to configure with your system
 
 ```yml
 general:
     author_name: Felix O'Farrell
-    project_name: BBslap
+    project_name: GQSLAP
     licence: MIT
     version: 1.0
 
@@ -71,7 +71,7 @@ part: 3
 and run
 
 ```python
-python BBslap.py make full 
+python GQSLAP.py make full 
 ```
 
 ## Contributing
