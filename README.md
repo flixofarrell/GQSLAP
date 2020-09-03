@@ -1,4 +1,4 @@
-![Alt text](bblogo/bblogo.png?raw=true "Title")
+![Alt text](GQlogo/GQlogo.png?raw=true "Title")
 
 [![Build Status](https://travis-ci.com/flixofarrell/GQSLAP.svg?branch=master)](https://travis-ci.com/flixofarrell/GQSLAP)
 
