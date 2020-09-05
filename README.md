@@ -6,7 +6,7 @@
 # GQSLAP
 GWAS/QTL SimpLe Automated Pipeline
 
-GQSLAP is an automated pipeline designed to process UKBB plink files on HPCs. The pipeline is built ontop of CGAT-core and uses GCTA's fastGWA linear mixed model GWAS algorithm.
+GQSLAP is an automated pipeline designed to process large plink files on HPCs. The pipeline is built ontop of CGAT-core and uses GCTA's fastGWA linear mixed model GWAS algorithm.
 
 ## Overview
 
@@ -49,8 +49,8 @@ general:
 
 # Pipeline specific options:
 
-#dir of UKBB files
-files: /path/to/your/UKBB/plink/files
+#dir of plink files
+files: /path/to/your/plink/files
 
 #title of GRM directory (made by pipeline)
 GRM_dir: GRMs
@@ -59,10 +59,10 @@ GRM_dir: GRMs
 gcta_dir: path/to/gcta/gcta64
 
 #pheno file dir
-pheno: /path/to/your/UKBB/pheno/file
+pheno: /path/to/your/pheno/file
 
 #how many parts to split GRM into (save memory) 
-#gcta authors advise 250 
+#gcta authors advise 250 for UKBB scale data 
 part: 3
 
 #covariate paramters
