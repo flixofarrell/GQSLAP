@@ -65,7 +65,12 @@ pheno: /path/to/your/UKBB/pheno/file
 #gcta authors advise 250 
 part: 3
 
-#will add param for covariates soon...
+#covariate paramters
+cov : /path/to/your/cov/file
+qcov: /path/to/your/qcov/file
+
+#individuals to exclude (withdrawn consent)
+rmv : /path/to/your/remove/file 
 ```
 
 and run
