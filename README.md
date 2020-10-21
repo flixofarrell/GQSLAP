@@ -24,7 +24,7 @@ Date: June 2020
 
 ## Installation
 
-DOCKERFILE COMING SOON....
+DOCKERFILE COMING SOON!
 
 Currently required to clone this github directory and download GCTA's latest release and place it inside the GQSLAP dir.
 
