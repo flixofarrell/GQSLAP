@@ -1,3 +1,4 @@
+CODECOV_TOKEN="6295ba2e-bf03-4b7f-b307-b081361e7686"
 language: python
 
 install:
