@@ -24,9 +24,20 @@ Date: June 2020
 
 ## Installation
 
-DOCKERFILE COMING SOON!
+Currently there are two ways to use GQSLAP:
 
-Currently required to clone this github directory and download GCTA's latest release and place it inside the GQSLAP dir.
+1) Run the GQSLAP-build Dockerfile 
+
+2) Clone the repo and install the dependencies      
+
+
+###Docker
+
+![image info](./logo/dock_gq)
+
+
+
+###Clone this github directory and download GCTA's latest release and place it inside the GQSLAP dir.
 
 ## Dependencies 
 
