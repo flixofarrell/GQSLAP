@@ -1,4 +1,4 @@
-![Alt text](logo/GQlogo.png?raw=true "Title")
+![Alt text](logo/GQlogo.png?raw=true "Title") [![codecov](https://codecov.io/gh/flixofarrell/GQSLAP/branch/master/graph/badge.svg?token=Q5IR9VYWVU)](undefined)
 
 [![Build Status](https://travis-ci.com/flixofarrell/GQSLAP.svg?branch=master)](https://travis-ci.com/flixofarrell/GQSLAP)
 
