@@ -33,7 +33,7 @@ Currently there are two ways to use GQSLAP:
 
 ###Docker
 
-![image info](./logo/dock_gq)
+![image info](./logo/dock_gq.png)
 
 
 
