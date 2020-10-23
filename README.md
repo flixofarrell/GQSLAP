@@ -2,7 +2,7 @@
 
 
 
-[![Build Status](https://travis-ci.com/flixofarrell/GQSLAP.svg?branch=master)](https://travis-ci.com/flixofarrell/GQSLAP) [![codecov](https://codecov.io/gh/flixofarrell/GQSLAP/branch/master/graph/badge.svg?token=Q5IR9VYWVU)](undefined)
+[![Build Status](https://travis-ci.com/flixofarrell/GQSLAP.svg?branch=master)](https://travis-ci.com/flixofarrell/GQSLAP) [![codecov](https://codecov.io/gh/flixofarrell/GQSLAP/branch/master/graph/badge.svg?token=Q5IR9VYWVU)](undefined) ![GitHub language count](https://img.shields.io/github/languages/count/flixofarrell/GQSLAP)
 
 
 # GQSLAP
