@@ -1,6 +1,6 @@
-CODECOV_TOKEN="6295ba2e-bf03-4b7f-b307-b081361e7686"
 language: python
-
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 install:
   - pip install cgatcore
   - pip install pyyaml
