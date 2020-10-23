@@ -40,7 +40,6 @@ Create a directory called GQSLAP-build
 
 ```
 mkdir GQSLAP-build
-
 ```
 Create a file called Dockerfile and with
 ```
@@ -70,19 +69,16 @@ RUN pip3 install google-cloud
 RUN pip3 install ftputil
 RUN pip3 install pysftp
 COPY GQSLAP .
-
 ```
 Build linux GQSLAP container
 
 ```
 docker build GQSLAP-build -t 'gqslap'
-
 ```
 Run the container
 
 ```
 docker run -it gqslap
-
 ```
 
 
