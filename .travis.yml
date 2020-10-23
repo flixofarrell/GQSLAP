@@ -28,7 +28,7 @@ install:
 
 # command to run tests
 script:
-  - coverage run -m GQSLAP.py make full --local 
+  - coverage run GQSLAP.py make full --local 
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
