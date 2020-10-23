@@ -31,13 +31,62 @@ Currently there are two ways to use GQSLAP:
 2) Clone the repo and install the dependencies      
 
 
-###Docker
+### Docker
 
 ![image info](./logo/dock_gq.png)
 
 
+Create a directory called GQSLAP-build
 
-###Clone this github directory and download GCTA's latest release and place it inside the GQSLAP dir.
+```
+mkdir GQSLAP-build
+
+```
+Create a file called Dockerfile and with
+```
+FROM ubuntu:bionic
+RUN apt-get update && \
+apt-get install -y figlet 
+RUN apt-get -y install python3-pip
+RUN pip3 install cgatcore 
+RUN pip3 install pyyaml
+RUN pip3 install ruffus
+RUN pip3 install gevent
+RUN pip3 install paramiko
+RUN pip3 install pep8
+RUN pip3 install pytest
+RUN pip3 install pytest-pep8
+RUN pip3 install drmaa
+RUN pip3 install setuptools
+RUN pip3 install six
+RUN pip3 install sqlalchemy
+RUN pip3 install apsw
+RUN pip3 install pandas
+RUN pip3 install numpy
+RUN pip3 install pycoreutils
+RUN pip3 install boto3
+RUN pip3 install google-cloud-storage
+RUN pip3 install google-cloud
+RUN pip3 install ftputil
+RUN pip3 install pysftp
+COPY GQSLAP .
+
+```
+Build linux GQSLAP container
+
+```
+docker build GQSLAP-build -t 'gqslap'
+
+```
+Run the container
+
+```
+docker run -it gqslap
+
+```
+
+
+### Clone this github directory and download GCTA's latest release and place it inside the GQSLAP dir.
 
 ## Dependencies 
 
