@@ -47,7 +47,7 @@ Create a file called Dockerfile and with
 ```
 FROM ubuntu:bionic
 RUN apt-get update && \
-apt-get install -y figlet 
+apt-get install -y time vim git
 RUN apt-get -y install python3-pip
 RUN pip3 install cgatcore 
 RUN pip3 install pyyaml
@@ -70,7 +70,8 @@ RUN pip3 install google-cloud-storage
 RUN pip3 install google-cloud
 RUN pip3 install ftputil
 RUN pip3 install pysftp
-COPY GQSLAP .
+
+RUN git clone https://github.com/flixofarrell/GQSLAP.git
 ```
 Build linux GQSLAP container
 
@@ -82,9 +83,16 @@ Run the container
 ```
 docker run -it gqslap
 ```
+move into GQSLAP dir
+```
+cd GQSLAp
+```
+run GQSLAP 
+```
+python3 GQSLAP.py make full --local
+```
 
-
-### Clone this github directory and download GCTA's latest release and place it inside the GQSLAP dir.
+### Clone this github directory onto your system
 
 ## Dependencies 
 
