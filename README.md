@@ -85,7 +85,7 @@ docker run -it gqslap
 ```
 move into GQSLAP dir
 ```
-cd GQSLAp
+cd GQSLAP
 ```
 run GQSLAP 
 ```
