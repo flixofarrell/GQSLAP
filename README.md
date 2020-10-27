@@ -24,6 +24,9 @@ Author: Felix O'Farrell
 Date: June 2020
 
 
+![image info](./GQ_workflow.png)
+
+
 ## Installation
 
 Currently there are two ways to use GQSLAP:
