@@ -24,7 +24,7 @@ Author: Felix O'Farrell
 Date: June 2020
 
 
-![image info](./GQ_workflow.png)
+![image info](./GQ_workfow.png)
 
 
 ## Installation
