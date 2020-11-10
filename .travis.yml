@@ -5,6 +5,7 @@ install:
   - pip install ruffus
   - pip install gevent
   - pip install paramiko
+  - pip install pyfiglet==0.7
   - pip install pep8
   - pip install pytest
   - pip install pytest-pep8
@@ -31,4 +32,4 @@ script:
   - coverage run GQSLAP.py make full --local 
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+   bash <(curl -s https://codecov.io/bash)

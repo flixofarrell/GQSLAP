@@ -8,21 +8,50 @@
 general:
     author_name: Felix O'Farrell
     project_name: UKBB Pipe
-    licence:
+    licence: MIT
     version: 1.0
 
 # Pipeline specific options:
 
-#dir of UKBB files
+#dir holding plink files - if you have multiple chromosome
+#files, ensure the directory only holds the plink files you
+#want to process (soft links will work fine)
 files: test_files
 
+#Parameter for number of plink files you have - if there
+#is one set of plink files (3 files total) then input 0. If
+#you have one set of plink files per chromosome input 1
+multiple_chr: 0
 
-#dir of GCTA64 command 
-gcta_dir: ./gcta_l/gcta64
+#If you have one set of 3 plink files (which has info
+#for all chromosomes) add the prefix of the file here
 
+#prefix of each of the three plink file format (not
+#needed if you data is in multiple chromosome format)
+prefix: foobar
+
+#dir of GCTA64 command - you won't need to change this unless
+#you have gcta configured on your system and would rather use 
+#your specific version
+gcta_dir: ./gcta/gcta64
+
+#Path for your phenotype file
 pheno: test_files/phe_n.phen
 
+#Number of parts to split the GRM into (for UKBB sized dataset GCTA
+#reccomend 250)
 part: 3
 
+#Dir where you want the output to be
 out_dir: test_files/outdir
 
+#Path to a list of individuals to remove. The current file is empty,
+#unless you have your own remove file to use leave this here
+rmv: test_files/0test_rmv
+
+cov: test_files/phe_n.phen
+
+qcov: test_files/phe_n.phen
+
+
+#--covar %(cov)s --qcovar %(qcov)s

@@ -34,6 +34,8 @@ Code
 ====
 """
 
+import time
+from pyfiglet import Figlet
 import cgatcore.experiment as E
 from ruffus import *
 from ruffus.combinatorics import *
@@ -51,17 +53,69 @@ PARAMS = P.get_parameters(
     "pipeline.yml"])
 
 
-c_title = []
-bfiles = []
-files = PARAMS["files"]
 
+##################################################
+# Opening GQSLAP message
+##################################################
+if PARAMS["multiple_chr"] == 1:
+  mc = 'Yes'
 
-for file in os.listdir(files):
-    if file.endswith(".bed"):
-       c_title.append(os.path.join(files, file))
-       
-for i in c_title:
-    bfiles.append(i[:-4])
+elif PARAMS["multiple_chr"] == 0:
+  mc = 'No'
+
+x = ' '
+t = Figlet(font='doh',width = 1000)
+print (t.renderText('GQSLAP'))
+print (10*x)
+a = Figlet(font='slant')
+print (a.renderText("Parameters"))
+print (10*x)
+print(f"{'='*100}\nSingle files dir" + 3*x + "--->" + 3*x + PARAMS["files"])
+print(f"{'='*100}\nMultiple Chr" + 3*x + "--->" + 3*x + mc)
+print(f"{'='*100}\nPrefix" + 3*x + "--->" + 3*x + PARAMS["prefix"])
+print(f"{'='*100}\nPhenotype file dir" + 3*x + "--->" + 3*x + PARAMS["pheno"])
+print(f"{'='*100}\nCovariate file dir" + 3*x + "--->" + 3*x + PARAMS["cov"])
+print(f"{'='*100}\nQcovariate file dir" + 3*x + "--->" + 3*x + PARAMS["qcov"])
+print(f"{'='*100}\nRemove file dir" + 3*x + "--->" + 3*x + PARAMS["rmv"])
+print(f"{'='*100}\nGRM construction parts" + 3*x + "--->" + 3*x + str(PARAMS["part"]))
+print(f"{'='*100}\nOut dir" + 3*x + "--->" + 3*x + PARAMS["out_dir"]+"\n\n\n")
+
+time.sleep(3)
+
+##################################################
+# Workflow related functions
+##################################################
+def multiple_chr_findr(files):
+    
+    '''
+  Function to grab input strings for plink files where 
+  each chromosome has a set of .fam .bim & .bed.
+    '''    
+
+    c_title = []
+    bfiles = []
+    
+    for file in os.listdir(files):
+        if file.endswith(".bed"):
+           c_title.append(os.path.join(files, file))
+           
+    for i in c_title:
+        bfiles.append(i[:-4])
+        
+    return (bfiles)
+
+def single_file_makr(prefix):
+	'''
+	Function to make a list of one string to ensure
+	each ruffus function iterates through once and 
+	not once per chromosome. 
+	'''
+	bfiles = [prefix]
+	return (bfiles)
+
+##################################################
+# Start
+##################################################
 
 GRMs = os.path.abspath(
       	os.path.join(PARAMS["out_dir"] + "/GRMs"))
@@ -72,69 +126,123 @@ SPs = os.path.abspath(
 GWAS = os.path.abspath(
       	os.path.join(PARAMS["out_dir"] + "/GWAS"))
 
+prefix = PARAMS["prefix"]
+files = PARAMS["files"]
+
+if PARAMS["multiple_chr"] == 1:
+  bfiles = multiple_chr_findr(files) 
+
+elif PARAMS["multiple_chr"] == 0:
+	bfiles = single_file_makr(prefix)
+print (bfiles)
+
 ##################################################
 # Generate GRM from raw plink files
 ##################################################
 @originate(bfiles) 
 @mkdir(GRMs)        
-def generate_GRM(title):	
+def generate_GRM(title):  
 
-	'''
-	Function to generate Genetic Relation Matrix from the
-	FASTGWA-MLM analysis.
-	'''	
-	
-	gcta = PARAMS["gcta_dir"]
+  '''
+  Function to generate Genetic Relation Matrix from the
+  FASTGWA-MLM analysis.
+  '''
 
-	part = PARAMS["part"]
-
-	GRMs = os.path.abspath(
-      	os.path.join(PARAMS["out_dir"] + "/GRMs"))
-
-	chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
-	chrom = ''.join(chrom)
+  if PARAMS["multiple_chr"] == 1:
 
 
+    gcta = PARAMS["gcta_dir"]
 
-	statement = '''
+    part = PARAMS["part"]
 
-    ./scripts/GRM_loop.sh %(gcta)s %(title)s %(part)s %(GRMs)s/%(chrom)s
+    rmv = PARAMS["rmv"]
 
-				'''
+    GRMs = os.path.abspath(
+         os.path.join(PARAMS["out_dir"] + "/GRMs"))
 
-	P.run(statement)
+    chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
+    chrom = ''.join(chrom)
 
+    statement = '''
+        ./scripts/GRM_loop.sh %(gcta)s %(title)s %(part)s %(GRMs)s/%(chrom)s %(rmv)s
+
+              '''
+
+  elif PARAMS["multiple_chr"] == 0:
+
+    gcta = PARAMS["gcta_dir"]
+
+    part = PARAMS["part"]
+
+    rmv = PARAMS["rmv"]
+
+    files = PARAMS["files"]
+
+    prefix = PARAMS["prefix"]
+
+    GRMs = os.path.abspath(
+          os.path.join(PARAMS["out_dir"] + "/GRMs"))
+
+    statement = '''
+
+        ./scripts/GRM_loop.sh %(gcta)s %(files)s/%(prefix)s %(part)s %(GRMs)s/%(prefix)s %(rmv)s
+
+              '''
+  P.run(statement)
 
 ##################################################
 # Concatenate the GRM files 
 ##################################################
+
+
 @follows(generate_GRM)
-@originate(bfiles)
 @mkdir('logs')
+@originate(bfiles) 
 def concat1(title):
 
-	'''
-	Function to concatenate the .grm.id/bin/N.bin 
-	files for each chromosome.
-	'''
-	GRMs = os.path.abspath(
-      	   os.path.join(PARAMS["out_dir"] + "/GRMs"))
-	
-	chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
-	chrom = ''.join(chrom)
+  '''
+  Function to generate Genetic Relation Matrix from the
+  FASTGWA-MLM analysis.
+  '''
 
-	part = PARAMS["part"]
+  if PARAMS["multiple_chr"] == 1:
+
+    GRMs = os.path.abspath(
+           os.path.join(PARAMS["out_dir"] + "/GRMs"))
+  
+    chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
+    chrom = ''.join(chrom)
+
+    part = PARAMS["part"]
 
 
-	statement = '''
+    statement = '''
+        
+      cat %(GRMs)s/%(chrom)s.part_%(part)s_*.grm.id > %(GRMs)s/%(chrom)s.grm.id &&
+      cat %(GRMs)s/%(chrom)s.part_%(part)s_*.grm.bin > %(GRMs)s/%(chrom)s.grm.bin &&
+      cat %(GRMs)s/%(chrom)s.part_%(part)s_*.grm.N.bin > %(GRMs)s/%(chrom)s.grm.N.bin
 
-	cat %(GRMs)s/%(chrom)s.part_%(part)s_*.grm.id > %(GRMs)s/%(chrom)s.grm.id &&
-	cat %(GRMs)s/%(chrom)s.part_%(part)s_*.grm.bin > %(GRMs)s/%(chrom)s.grm.bin &&
-	cat %(GRMs)s/%(chrom)s.part_%(part)s_*.grm.N.bin > %(GRMs)s/%(chrom)s.grm.N.bin
+              '''
 
-				'''
+  elif PARAMS["multiple_chr"] == 0:
 
-	P.run(statement)
+
+    GRMs = os.path.abspath(
+             os.path.join(PARAMS["out_dir"] + "/GRMs"))
+    
+    part = PARAMS["part"]
+
+    prefix = PARAMS["prefix"]
+
+
+    statement = '''
+
+    cat %(GRMs)s/%(prefix)s.part_%(part)s_*.grm.id > %(GRMs)s/%(prefix)s.grm.id &&
+    cat %(GRMs)s/%(prefix)s.part_%(part)s_*.grm.bin > %(GRMs)s/%(prefix)s.grm.bin &&
+    cat %(GRMs)s/%(prefix)s.part_%(part)s_*.grm.N.bin > %(GRMs)s/%(prefix)s.grm.N.bin      
+
+              '''
+  P.run(statement)
 
 
 ##################################################
@@ -145,30 +253,51 @@ def concat1(title):
 @mkdir(SPs)
 def sparse_GRM(title):
 
-	'''
-	Function to create sparse GRM for each chromosome.
-	'''
+  '''
+  Function to create sparse GRM for each chromosome.
+  '''
 
-	gcta = PARAMS["gcta_dir"]
+  if PARAMS["multiple_chr"] == 1:
 
-	GRMs = os.path.abspath(
-      	   os.path.join(PARAMS["out_dir"] + "/GRMs"))
+    gcta = PARAMS["gcta_dir"]
 
-	SPs = os.path.abspath(
-      	   os.path.join(PARAMS["out_dir"] + "/SPs"))
+    GRMs = os.path.abspath(
+             os.path.join(PARAMS["out_dir"] + "/GRMs"))
 
-	chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
-	chrom = ''.join(chrom)
+    SPs = os.path.abspath(
+             os.path.join(PARAMS["out_dir"] + "/SPs"))
+
+    chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
+    chrom = ''.join(chrom)
+
+    statement = '''
+        
+    %(gcta)s --grm %(GRMs)s/%(chrom)s --make-bK-sparse 0.05 --out %(SPs)s/%(chrom)s_sp
 
 
-	statement = '''
-	
-	%(gcta)s --grm %(GRMs)s/%(chrom)s --make-bK-sparse 0.05 --out %(SPs)s/%(chrom)s_sp
+              '''
+
+  elif PARAMS["multiple_chr"] == 0:
 
 
-				'''
 
-	P.run(statement)
+    gcta = PARAMS["gcta_dir"]
+
+    GRMs = os.path.abspath(
+             os.path.join(PARAMS["out_dir"] + "/GRMs"))
+
+    SPs = os.path.abspath(
+             os.path.join(PARAMS["out_dir"] + "/SPs"))
+
+
+    statement = '''
+
+    %(gcta)s --grm %(GRMs)s/%(prefix)s --make-bK-sparse 0.05 --out %(SPs)s/%(prefix)s_sp
+ 
+
+              '''
+  P.run(statement)
+
 
 
 ##################################################
@@ -179,73 +308,108 @@ def sparse_GRM(title):
 @mkdir(GWAS)
 def mlm_gwa(title):
 
-	'''
-	Function to run fastGWA on the plink files and GRM.
-	'''	
-	gcta = PARAMS["gcta_dir"]
+  '''
+  Function to run fastGWA on the plink files and GRM.
+  ''' 
 
-	plinks = os.path.abspath(
-      	   os.path.join(PARAMS["files"]))
+  if PARAMS["multiple_chr"] == 1:
 
-	GRMs = os.path.abspath(
-      	   os.path.join(PARAMS["out_dir"] + "/GRMs"))
+    gcta = PARAMS["gcta_dir"]
 
-	GWAS = os.path.abspath(
-      	   os.path.join(PARAMS["out_dir"] + "/GWAS"))	
+    plinks = os.path.abspath(
+             os.path.join(PARAMS["files"]))
 
-	SPs = os.path.abspath(
-      	   os.path.join(PARAMS["out_dir"] + "/SPs"))
+    GRMs = os.path.abspath(
+             os.path.join(PARAMS["out_dir"] + "/GRMs"))
 
-	pheno = PARAMS["pheno"]
+    GWAS = os.path.abspath(
+             os.path.join(PARAMS["out_dir"] + "/GWAS")) 
 
-	
-	chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
-	chrom = ''.join(chrom)
+    SPs = os.path.abspath(
+             os.path.join(PARAMS["out_dir"] + "/SPs"))
+
+    pheno = PARAMS["pheno"]
+
+    cov = PARAMS["cov"]
+
+    qcov = PARAMS["qcov"]
+
+    
+    chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
+    chrom = ''.join(chrom)
 
 
-	statement = ''' 
+    statement = '''
+    
+    %(gcta)s --bfile %(plinks)s/%(chrom)s
+    --grm-sparse %(SPs)s/%(chrom)s_sp --fastGWA-mlm 
+    --pheno %(pheno)s
+    --out %(GWAS)s/%(chrom)s
 
-	%(gcta)s --bfile %(plinks)s/%(chrom)s
-	--grm-sparse %(SPs)s/%(chrom)s_sp --fastGWA-mlm 
-	--pheno %(pheno)s  
-	--out %(GWAS)s/%(chrom)s
+              '''
 
-				'''
+  
+  elif PARAMS["multiple_chr"] == 0:
 
-	P.run(statement)
+    gcta = PARAMS["gcta_dir"]
+
+    GRMs = os.path.abspath(
+             os.path.join(PARAMS["out_dir"] + "/GRMs"))
+
+    GWAS = os.path.abspath(
+             os.path.join(PARAMS["out_dir"] + "/GWAS")) 
+
+    SPs = os.path.abspath(
+             os.path.join(PARAMS["out_dir"] + "/SPs"))
+
+    pheno = PARAMS["pheno"]
+
+    cov = PARAMS["cov"]
+
+    qcov = PARAMS["qcov"]
+
+    statement = '''
+    %(gcta)s --bfile %(files)s/%(prefix)s
+    --grm-sparse %(SPs)s/%(prefix)s_sp --fastGWA-mlm 
+    --pheno %(pheno)s 
+    --out %(GWAS)s/%(prefix)s
+ 
+
+              '''
+
+  P.run(statement)
 
 
 ##################################################
 # Concat the individual fastGWA's
 ##################################################
-
+@active_if(PARAMS["multiple_chr"] == 1)
 @follows(mlm_gwa)
 @mkdir('masterGWA') 
 def concat2():
 
-	'''
-	Function to append the previous .fastGWA summary
-	file to the next. This outputs a masterfastGWA 
-	summary file which contains SNPs across entire
-	genome.
-	'''	
+  '''
+  Function to append the previous .fastGWA summary
+  file to the next. This outputs a masterfastGWA 
+  summary file which contains SNPs across entire
+  genome.
+  ''' 
 
-	GWAS = os.path.abspath(
-      	   os.path.join(PARAMS["out_dir"] + "/GWAS"))	
+  GWAS = os.path.abspath(
+           os.path.join(PARAMS["out_dir"] + "/GWAS")) 
 
-	statement = '''
+  statement = '''
 
 
-	cat %(GWAS)s/*.fastGWA | grep -v -e CHR -e Inverse -e Egger > %(GWAS)s/master.tsv ;
+  cat %(GWAS)s/*.fastGWA | grep -v -e CHR -e Inverse -e Egger > %(GWAS)s/master.tsv ;
     echo -e "CHR\\tSNP\\tPOS\\tA1\\tA2\\tN\\tAF1\\tBETA\\tSE\\tP" | cat - %(GWAS)s/master.tsv > %(GWAS)s/master2.tsv ;
     mv -f %(GWAS)s/master2.tsv %(GWAS)s/master.tsv ;
 
 
-				'''
+        '''
 
-				
-	P.run(statement)
-
+        
+  P.run(statement)
 
 
 ##################################################
@@ -295,4 +459,6 @@ def main(argv=None):
 if __name__ == "__main__":
     sys.exit(P.main(sys.argv))
 
-#end
+##################################################
+# End
+##################################################
