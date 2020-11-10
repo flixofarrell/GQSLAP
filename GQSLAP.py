@@ -80,7 +80,7 @@ print(f"{'='*100}\nRemove file dir" + 3*x + "--->" + 3*x + PARAMS["rmv"])
 print(f"{'='*100}\nGRM construction parts" + 3*x + "--->" + 3*x + str(PARAMS["part"]))
 print(f"{'='*100}\nOut dir" + 3*x + "--->" + 3*x + PARAMS["out_dir"]+"\n\n\n")
 
-time.sleep(3)
+time.sleep(5)
 
 ##################################################
 # Workflow related functions

@@ -33,7 +33,7 @@ prefix: foobar
 #dir of GCTA64 command - you won't need to change this unless
 #you have gcta configured on your system and would rather use 
 #your specific version
-gcta_dir: ./gcta/gcta64_l
+gcta_dir: ./gcta_l/gcta64
 
 #Path for your phenotype file
 pheno: test_files/phe_n.phen
@@ -49,9 +49,9 @@ out_dir: test_files/outdir
 #unless you have your own remove file to use leave this here
 rmv: test_files/0test_rmv
 
-cov: test_files/phe_n.phen
+cov: test_files/cov.cov
 
-qcov: test_files/phe_n.phen
+qcov: test_files/qcov.qcov
 
 
 #--covar %(cov)s --qcovar %(qcov)s
