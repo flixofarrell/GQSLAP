@@ -16,7 +16,7 @@ general:
 #dir holding plink files - if you have multiple chromosome
 #files, ensure the directory only holds the plink files you
 #want to process (soft links will work fine)
-files: test_files
+files: test_files/hapmap
 
 #Parameter for number of plink files you have - if there
 #is one set of plink files (3 files total) then input 0. If
@@ -28,7 +28,7 @@ multiple_chr: 0
 
 #prefix of each of the three plink file format (not
 #needed if you data is in multiple chromosome format)
-prefix: foobar
+prefix: hapmap
 
 #dir of GCTA64 command - you won't need to change this unless
 #you have gcta configured on your system and would rather use 
@@ -36,14 +36,14 @@ prefix: foobar
 gcta_dir: ./gcta_l/gcta64
 
 #Path for your phenotype file
-pheno: test_files/phe_n.phen
+pheno: test_files/hapmap/pop.phe
 
 #Number of parts to split the GRM into (for UKBB sized dataset GCTA
 #reccomend 250)
 part: 3
 
 #Dir where you want the output to be
-out_dir: test_files/outdir
+out_dir: test_files/hapmap/outdir
 
 #Path to a list of individuals to remove. The current file is empty,
 #unless you have your own remove file to use leave this here

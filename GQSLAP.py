@@ -46,6 +46,7 @@ import sys
 import re
 
 
+
 #get parameters from YML file
 PARAMS = P.get_parameters(
     ["%s/pipeline.yml" % os.path.splitext(__file__)[0],
@@ -66,10 +67,9 @@ elif PARAMS["multiple_chr"] == 0:
 x = ' '
 t = Figlet(font='doh',width = 1000)
 print (t.renderText('GQSLAP'))
-print (10*x)
+#print (10*x)
 a = Figlet(font='slant')
 print (a.renderText("Parameters"))
-print (10*x)
 print(f"{'='*100}\nSingle files dir" + 3*x + "--->" + 3*x + PARAMS["files"])
 print(f"{'='*100}\nMultiple Chr" + 3*x + "--->" + 3*x + mc)
 print(f"{'='*100}\nPrefix" + 3*x + "--->" + 3*x + PARAMS["prefix"])
@@ -78,9 +78,9 @@ print(f"{'='*100}\nCovariate file dir" + 3*x + "--->" + 3*x + PARAMS["cov"])
 print(f"{'='*100}\nQcovariate file dir" + 3*x + "--->" + 3*x + PARAMS["qcov"])
 print(f"{'='*100}\nRemove file dir" + 3*x + "--->" + 3*x + PARAMS["rmv"])
 print(f"{'='*100}\nGRM construction parts" + 3*x + "--->" + 3*x + str(PARAMS["part"]))
-print(f"{'='*100}\nOut dir" + 3*x + "--->" + 3*x + PARAMS["out_dir"]+"\n\n\n")
+print(f"{'='*100}\nOut dir" + 3*x + "--->" + 3*x + PARAMS["out_dir"]+"\n")
 
-time.sleep(5)
+time.sleep(3)
 
 ##################################################
 # Workflow related functions
@@ -125,6 +125,9 @@ SPs = os.path.abspath(
 
 GWAS = os.path.abspath(
       	os.path.join(PARAMS["out_dir"] + "/GWAS"))
+
+plots = os.path.abspath(
+        os.path.join(GWAS + "/Plots"))
 
 prefix = PARAMS["prefix"]
 files = PARAMS["files"]
@@ -279,8 +282,6 @@ def sparse_GRM(title):
 
   elif PARAMS["multiple_chr"] == 0:
 
-
-
     gcta = PARAMS["gcta_dir"]
 
     GRMs = os.path.abspath(
@@ -385,7 +386,6 @@ def mlm_gwa(title):
 ##################################################
 @active_if(PARAMS["multiple_chr"] == 1)
 @follows(mlm_gwa)
-@mkdir('masterGWA') 
 def concat2():
 
   '''
@@ -403,22 +403,68 @@ def concat2():
 
   cat %(GWAS)s/*.fastGWA | grep -v -e CHR -e Inverse -e Egger > %(GWAS)s/master.tsv ;
     echo -e "CHR\\tSNP\\tPOS\\tA1\\tA2\\tN\\tAF1\\tBETA\\tSE\\tP" | cat - %(GWAS)s/master.tsv > %(GWAS)s/master2.tsv ;
-    mv -f %(GWAS)s/master2.tsv %(GWAS)s/master.tsv ;
+    mv -f %(GWAS)s/master2.tsv %(GWAS)s/%(prefix)s.fastGWA ;
 
 
         '''
-
-        
+       
   P.run(statement)
 
 
 ##################################################
-# Clean up
+# Wrangle fastGWA 
 ##################################################
 @follows(concat2)
+def wrnglfastGWA():
+
+  '''
+  Function to wrangle the fastGWA output into 
+  qqman format. 
+  '''
+    
+  GWAS = os.path.abspath(
+           os.path.join(PARAMS["out_dir"] + "/GWAS"))
+
+
+  statement = '''
+
+    sed -i -e '1s/POS/BP/' %(GWAS)s/%(prefix)s.fastGWA
+
+              '''
+  P.run(statement)
+
+##################################################
+# Get Man + QQ plots
+##################################################
+@follows(wrnglfastGWA)
+@mkdir(plots) 
+def plots():
+
+  '''
+  Function to create QQ and Manhattan plots
+  in ggplot2.
+  '''
+    
+  GWAS = os.path.abspath(
+           os.path.join(PARAMS["out_dir"] + "/GWAS"))
+
+  plots = os.path.abspath(
+           os.path.join(GWAS + "/Plots"))
+
+
+  statement = '''
+
+   Rscript ./scripts/GQ_plots.R %(GWAS)s/%(prefix)s.fastGWA %(plots)s/ %(prefix)s
+
+              '''
+  P.run(statement)
+
+##################################################
+# Clean up
+##################################################
+@follows(plots)
 @mkdir('logs')
 def clean_up():
-
 
 	'''
 	Function to move log files into a log directory 
@@ -459,6 +505,19 @@ def main(argv=None):
 if __name__ == "__main__":
     sys.exit(P.main(sys.argv))
 
+
 ##################################################
 # End
 ##################################################
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,35 +1,20 @@
 language: python
 install:
-  - pip install cgatcore
-  - pip install pyyaml
-  - pip install ruffus
-  - pip install gevent
-  - pip install paramiko
-  - pip install pyfiglet==0.7
-  - pip install pep8
-  - pip install pytest
-  - pip install pytest-pep8
-  - pip install drmaa
-  - pip install pyyaml
-  - pip install setuptools
-  - pip install six
-  - pip install sqlalchemy
-  - pip install apsw
-  - pip install pandas
-  - pip install numpy
-  - pip install coverage
-# Misc dependencies
-  - pip install pycoreutils
-  - pip install times
-  - pip install boto3
-  - pip install google-cloud-storage
-  - pip install google-cloud
-  - pip install ftputil
-  - pip install pysftp
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - source "$HOME/miniconda/etc/profile.d/conda.sh"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - conda env create -f gqslap_conda.yml
+  - conda activate gqslap
+
 
 # command to run tests
 script:
-  - coverage run GQSLAP.py make full --local 
+  - coverage run GQSLAP.py make full --local
 
 after_success:
    bash <(curl -s https://codecov.io/bash)
