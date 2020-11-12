@@ -1,8 +1,19 @@
 language: python
 install:
 
-  - sudo apt-get install -y r-base
-  - sudo Rscript r_dependencies.r
+#R deps
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda install -c r r-data.table
+  - conda install -c conda-forge r-readr
+  - conda install -c bioconda r-ggrepel
+  - conda install -c r r-dplyr
+
+#Pythn deps
   - pip install cgatcore
   - pip install pyyaml
   - pip install ruffus
@@ -31,18 +42,9 @@ install:
   - pip install pysftp
 
 
-before_script:
-
 # command to run tests
 script:
   - coverage run GQSLAP.py make full --local 
 
 after_success:
    bash <(curl -s https://codecov.io/bash) 
-
-# command to run tests
-script:
-  - coverage run GQSLAP.py make full --local
-
-after_success:
-   bash <(curl -s https://codecov.io/bash)
