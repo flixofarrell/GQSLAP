@@ -1,11 +1,11 @@
-install.packages("data.table")
+install.packages("data.table", repos = "http://cran.us.r-project.org")
 
-install.packages("readr")
+install.packages("readr", repos = "http://cran.us.r-project.org")
 
-install.packages("ggplot2")
+install.packages("ggplot2", repos = "http://cran.us.r-project.org")
 
-install.packages("ggrepel")
+install.packages("ggrepel", repos = "http://cran.us.r-project.org")
 
-install.packages("dplyr")
+install.packages("dplyr", repos = "http://cran.us.r-project.org")
 
-install.packages("RColorBrewer")
+install.packages("RColorBrewer", repos = "http://cran.us.r-project.org")
