@@ -1,5 +1,8 @@
 language: python
 install:
+
+  - sudo apt-get install -y r-base
+  - sudo Rscript r_dependencies.r
   - pip install cgatcore
   - pip install pyyaml
   - pip install ruffus
@@ -26,11 +29,9 @@ install:
   - pip install google-cloud
   - pip install ftputil
   - pip install pysftp
-  - sudo apt-get install -y r-base
 
 
 before_script:
-  - Rscript r_dependencies.r
 
 # command to run tests
 script:
