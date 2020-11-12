@@ -8,10 +8,10 @@ install:
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
-  - conda install -c r r-data.table
-  - conda install -c conda-forge r-readr
   - conda install -c bioconda r-ggrepel
+  - conda install -c conda-forge r-readr
   - conda install -c r r-dplyr
+  - conda install -c r r-data.table
 
 #Pythn deps
   - pip install cgatcore
