@@ -7,6 +7,7 @@ RUN pip3 install pyyaml
 RUN pip3 install ruffus
 RUN pip3 install gevent
 RUN pip3 install paramiko
+RUN pip3 install pyfiglet==0.7
 RUN pip3 install pep8
 RUN pip3 install pytest
 RUN pip3 install pytest-pep8
