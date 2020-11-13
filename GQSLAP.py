@@ -163,7 +163,9 @@ def generate_GRM(title):
     GRMs = os.path.abspath(
          os.path.join(PARAMS["out_dir"] + "/GRMs"))
 
-    chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
+    prefix = PARAMS["prefix"]
+
+    chrom = re.findall(prefix+r'[1-9][0-9]?$|^100$', title, re.I)
     chrom = ''.join(chrom)
 
     statement = '''
@@ -213,7 +215,9 @@ def concat1(title):
     GRMs = os.path.abspath(
            os.path.join(PARAMS["out_dir"] + "/GRMs"))
   
-    chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
+    prefix = PARAMS["prefix"]
+
+    chrom = re.findall(prefix+r'[1-9][0-9]?$|^100$', title, re.I)
     chrom = ''.join(chrom)
 
     part = PARAMS["part"]
@@ -270,7 +274,9 @@ def sparse_GRM(title):
     SPs = os.path.abspath(
              os.path.join(PARAMS["out_dir"] + "/SPs"))
 
-    chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
+    prefix = PARAMS["prefix"]
+
+    chrom = re.findall(prefix+r'[1-9][0-9]?$|^100$', title, re.I)
     chrom = ''.join(chrom)
 
     statement = '''
@@ -336,7 +342,9 @@ def mlm_gwa(title):
     qcov = PARAMS["qcov"]
 
     
-    chrom = re.findall(r'chr[1-9][0-9]?$|^100$', title, re.I)
+    prefix = PARAMS["prefix"]
+
+    chrom = re.findall(prefix+r'[1-9][0-9]?$|^100$', title, re.I)
     chrom = ''.join(chrom)
 
 
