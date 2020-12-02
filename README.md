@@ -116,7 +116,7 @@ general:
     author_name: Felix O'Farrell
     project_name: GQSLAP
     licence: MIT
-    version: 1.0
+    version: 0.1
 
 # Pipeline specific options:
 
